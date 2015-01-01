@@ -174,7 +174,7 @@
 							enemies[k].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); //set new x-coord for variety
 						enemies[k].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
 						 bullets[j].position.z = enemyRange.z;
-							bullets.splice(j,1);
+							bullets.splice(j,1); j--;
 														
 						}
 						}
