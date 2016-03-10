@@ -58,6 +58,7 @@
 			var enemyRange = new THREE.Vector3(550,700,700);
 			var gemRange = 500;
 			var fireSpeed = 4;
+			var bullets = [];
 			//init();
 			
 			var mouseclick = false;
@@ -76,7 +77,7 @@
 				scene = new THREE.Scene();
 				// mesh properties
 				var geometry = new THREE.SphereGeometry( sphereRadius );
-				var geometry2 = new THREE.SphereGeometry(sphereRadius/5);
+				var geometry2 = new THREE.SphereGeometry(sphereRadius/2);
 				//var texture = THREE.ImageUtils.loadTexture( 'crate.gif' );
 				//texture.anisotropy = renderer.getMaxAnisotropy();
 				var material = new THREE.MeshBasicMaterial( { color: 0x00ff11 } );
@@ -85,7 +86,7 @@
 				for ( var i = 0; i < nBoxes; i++ ) {
 					var mesh = new THREE.Mesh( geometry, material );
 					mesh.position.set( enemyRange.x/2 - enemyRange.x*Math.random(),
-									   enemyRange.y/2 - enemyRange.y * Math.random(),
+									   enemyRange.y/2 - enemyRange.y*Math.random(),
 									   enemyRange.z/2 - enemyRange.z*Math.random());
 					scene.add( mesh );
 
@@ -93,6 +94,8 @@
 				}
 				// gem
 				gem = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( {color: 0xFFFF00} ) );
+				var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
+
 				gem.position.set( gemRange/2 - gemRange * Math.random(),
 								  gemRange/2 - gemRange * Math.random(),
 								  0.0);
@@ -123,16 +126,16 @@
 
 			function onClickof()
 			{
-				alert("You have clicked the mouse!");
+				//alert("You have clicked the mouse!");
 				// mouseclick = true;
 					//fire.position.set(player.x,player.y,player.z-=10);
-				var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
 				fire.scale.set(2,2,2);
 				fire.position.z = 0.0;
 				fire.position.y = 0.25 + player.position.y;
 				fire.position.x = 0.25 + player.position.x;
 				//fire.position.z = player.position.z;
 				scene.add(fire);
+				bullets.push(fire);
 
 
 			}
@@ -145,7 +148,7 @@
 				for ( var i = 0; i < enemies.length; i++ ){
 					if ( enemies[i].position.z > enemyRange.z/2 ) { // if the enemy has moved below the container
 						enemies[i].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); //set new x-coord for variety
-						enemies[i].position.y = enemyRange.y/2- enemyRange.y * Math.random(); // set y-coord at top of container
+						enemies[i].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
 						enemies[i].position.z = -enemyRange.z/2;
 					} else {
 						if ( enemies[i].position.distanceTo( player.position ) < 2 * sphereRadius) { // if there's a player-enemy collision
@@ -154,13 +157,35 @@
 						enemies[i].position.z += enemySpeed; // translate enemy downwards
 					}
 				}
+				for(var j = 0;j<bullets.length;j++)
+				{
+					if (bullets[j].position.z > enemyRange.z) 
+					{ 
+						bullets.splice(j,1);
+					} 
+					else {
+						for(var k=0;k<enemies.length;k++)
+							{
+							if ( bullets[j].position.distanceTo( enemies[k].position ) < 3*sphereRadius/2) { // if there's a bullet-enemy collision
 
-				// check for player-gem collision
+							var score = Number(scoreDiv.innerHTML) + 7;	
+							scoreDiv.innerHTML = score.toString();
+							enemies[k].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); //set new x-coord for variety
+						enemies[k].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
+							bullets.splice(j,1);
+							j--;
+							
+						}
+						}
+						bullets[j].position.z -= (enemySpeed+2); 
+					}
+				}
+				//player gem collision check
 				if ( player.position.distanceTo( gem.position ) < 2 * sphereRadius ) {
-					gem.position.x = gemRange/2 - gemRange * Math.random();// give the gem a random xy coord
+					gem.position.x = gemRange/2 - gemRange * Math.random();
 					gem.position.y = gemRange/2 - gemRange * Math.random();
 
-					var score = Number(scoreDiv.innerHTML) + 1; // increase score
+					score = Number(scoreDiv.innerHTML) + 1; 
 					scoreDiv.innerHTML = score.toString();
 
 					var best = bestScoreDiv.innerHTML.split(' ');
@@ -168,24 +193,7 @@
 						bestScoreDiv.innerHTML = best[0] + " " + score.toString();
 					}
 				}
-				//shooting
-				// if(mouseclick)
-				// {
-				// 	fire.position.z-=4;
-				// 	if(fire.position.z>fire.position.z/2)
-				// 	flag = true;
-				// }
-				// if(flag)
-				// {
-				// 	var fire = new THREE.Sprite(spriteMaterial);
-				// 	fire.scale.set(2,2,2);
-				// 	fire.position.z = 1.2;
-				// 	fire.position.y = 0.25;
-				// 	player.add(fire);
-				// 	flag = false;
-				// 	mouseclick = false;
-
-				// }
+	
 				renderer.render( scene, camera );
 
 			}
