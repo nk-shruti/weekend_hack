@@ -1,5 +1,6 @@
 <script type="text/javascript" src="libs/jquery.imagemapster.min.js"></script>
-<img src="images/room.jpg" alt="" usemap="#Map" />
+<script type="text/javascript" src="libs/jquery.min.js"> </script>
+<img src="images/room.jpg" id="room" alt="" usemap="#Map" />
 <map name="Map" id="Map">
     <area alt="" title="" href="#" shape="poly" coords="536,947,519,954,507,965,496,980,486,1001,493,1012,513,1018,529,1018,544,1018,556,1013,572,1007,584,997,587,988,591,974,591,963,585,952,576,939,575,930,585,913,598,890,591,883,564,929" />
     <area alt="" title="" href="#" shape="poly" coords="1005,809,1014,785,1026,768,1040,758,1060,747,1074,747,1088,746,1103,752,1121,760,1130,771,1138,781,1143,791,1151,805,1151,821,1153,833,1153,848,1141,869,1128,881,1105,893,1076,893,1055,891,1039,885,1019,867,1009,845" />
@@ -20,10 +21,11 @@
     <area alt="" title="" href="#" shape="poly" coords="482,411,461,396,459,380,468,367,479,359,496,355,510,368,518,384,514,402,497,413" />
 </map>
 <script>
-var image = $('#vegetables');
+var image = $('#room');
 
     image.mapster(
     {
+        
         fillOpacity: 0.4,
         fillColor: "d42e16",
         stroke: true,
@@ -32,7 +34,7 @@ var image = $('#vegetables');
         strokeWidth: 4,
         singleSelect: true,
         mapKey: 'name',
-        listKey: 'name',
+        listKey: 'name'
         
             
     });
