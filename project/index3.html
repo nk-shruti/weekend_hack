@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		<title>Shoot Em!</title>
-		<meta charset="utf-8">
 		<style>
 			body {
 				margin: 0px;
@@ -128,6 +127,8 @@
 			{
 				//alert("You have clicked the mouse!");
 				// mouseclick = true;
+				var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
+
 					//fire.position.set(player.x,player.y,player.z-=10);
 				fire.scale.set(2,2,2);
 				fire.position.z = 0.0;
@@ -172,12 +173,13 @@
 							scoreDiv.innerHTML = score.toString();
 							enemies[k].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); //set new x-coord for variety
 						enemies[k].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
+						 bullets[j].position.z = enemyRange.z;
 							bullets.splice(j,1);
-							j--;
-							
+														
 						}
 						}
-						bullets[j].position.z -= (enemySpeed+2); 
+						alert(bullets[j].position.z);
+						bullets[j].position.z -= 4; 
 					}
 				}
 				//player gem collision check
