@@ -13,7 +13,7 @@
 				margin-top: 12px;
 				font-style: bold;
 				text-align: center;
-				color: Grey;
+				color: black;
 			}
 			#container {
 				width: 500px;
@@ -29,7 +29,7 @@
 				margin-top: 12px;
 				font-style: bold;
 				text-align: center;
-				color: Grey;
+				color: black;
 			}
 
 
@@ -62,7 +62,7 @@
 			renderer.setSize( container.clientWidth, container.clientHeight );
 			document.body.appendChild( container );
 			container.appendChild( renderer.domElement );
-			camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 1, 1000 );
+			camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 1, 1000 );
 			camera.position.z = 400;
 			scene = new THREE.Scene();
 			var geometry = new THREE.SphereGeometry( sphereRadius );
