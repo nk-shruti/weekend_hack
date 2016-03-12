@@ -22,7 +22,7 @@
 				margin-left: auto;
     			margin-right: auto;
 				margin-top: 12px;
-				cursor: none;
+				
 			}
 			#bestScore {
 				font-size: 40px;
@@ -94,7 +94,7 @@
 			animate();
 			function onMouseMove( event ) {
 
-				mouse.x = ( event.clientX - container.offsetLeft );
+				mouse.x = event.clientX - container.offsetLeft;
 				mouse.y = - ( event.clientY - container.offsetTop );
 				player.position.set(  -(enemyRange.x/2-mouse.x),mouse.y+enemyRange.y/4, 0.0 );
 			}

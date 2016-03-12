@@ -6,6 +6,7 @@
 <title>Room</title>
 <script type="text/javascript" src="libs/jquery.min.js"></script>
 <script type="text/javascript" src="libs/jquery.imagemapster.min.js"></script>
+<script src="libs/three.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -30,11 +31,11 @@ $(document).ready(function () {
             toolTipClose: ["tooltip-click", "area-click"],
             areas: [
                 {
-                    key: "redpepper",
+                    key: "violin",
                     fillColor: "ffffff"
                 },
                 {
-                    key: "yellowpepper",
+                    key: "item4.5",
                     fillColor: "000000"
                 },
                 {
@@ -42,16 +43,19 @@ $(document).ready(function () {
                     fillColor: "000000"
                 },
                 {
-                   key: "dip",
-                  //toolTip: defaultDipTooltip
+                   key: "item6",
+                  //toolTip: defaultitem6Tooltip
                 },
                 {
-                   key: "asparagus",
+                   key: "item3",
                    strokeColor: "FFFFFF"
                 }
                 ]
         });
       });
+
+        
+    
 </script>
 <style>
 #wholething
@@ -101,7 +105,40 @@ $(document).ready(function () {
 }
 #game
 {
+    visibility: hidden;
+    position: absolute;
+    top:17%;
+    left: 20%;
+    height:60%;
+    width: 50%;
+}
+#score
+{
+    position: absolute;
+    top:0%;
+    height:5%;
+    width:auto;
+    color: white;
+    background-color: green;
 
+}
+#bestScore
+{ 
+    position: absolute;
+    top:5%;
+    height:5%;
+    width:auto;
+    color: white;
+    background-color: yellow;
+}
+#container
+{
+    position: absolute;
+    top:10%;
+    height:90%;
+    width:auto;
+    color: white;
+    background-color: red;
 }
 #bnc
 {
@@ -122,11 +159,16 @@ $(document).ready(function () {
 
     </div> <!-- topbar -->
     <div id="room">
-        <img src="images/room2.jpg" id="image" usemap="#veg" />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/38/Sherlock_Holmes_Museum_001.jpg" id="image" usemap="#roo" />
     </div>
             
         <div id="game">
-        
+            <div id="score">0</div>
+            <div id="container"></div>
+            <div id="bestScore">best: 0</div>
+
+
+
         </div> <!-- game -->
         <div id="bnc">
 
@@ -143,17 +185,223 @@ $(document).ready(function () {
 
 </div> <!-- wholething -->
 <!-- MAPPING WITH IMAGEMASTER -->
-<map id="veg_map" name="veg">
-                <area shape="poly" name="redpepper" coords="1666,1722,1638,1698,1622,1646,1606,1606,1610,1566,1598,1546,1582,1542,1566,1510,1554,1478,1546,1438,1570,1406,1518,1310,1490,1286,1470,1302,1494,1326,1470,1346,1446,1330,1462,1286,1502,1274,1526,1286,1566,1346,1594,1394,1626,1414,1650,1478,1686,1526,1702,1570,1718,1602,1734,1634,1738,1674,1706,1710,1710,1718,1726,1706,1694,1722,1730,1702,1686,1726" href="#">
-                <area shape="poly" name="celery" coords="2030,1722,2122,1674,2102,1646,2118,1638,2114,1594,2102,1570,2106,1538,2130,1530,2138,1502,2058,1478,1902,1474,1898,1586,1962,1618,1962,1686" href="#">
-                <area shape="poly" name="carrots" coords="2030,1722,2122,1674,2102,1646,2118,1638,2114,1594,2102,1570,2106,1538,2130,1530,2138,1502,2058,1478,1902,1474,1898,1586,1962,1618,1962,1686" href="#">
-                <area shape="poly" name="asparagus" coords="2370,1830,2370,1806,2346,1734,2318,1646,2306,1602,2474,1578,2638,1530,2730,1790,2486,1838" href="#">
-                <area shape="poly" name="squash" coords="1394,866,1366,734,1394,674,1442,718,1458,834,1482,862,1466,858,1406,870" href="#">
-                <area shape="poly" name="yellowpepper" coords="1590,474,1618,834,1886,854,1870,490"  href="#">
-                <area shape="poly" name="broccoli" coords="2210,6,2178,1022,2210,1058,2246,1062,2250,1206,2310,1170,2418,1166,2446,1158,2486,1162,2522,1158,2562,1162,2590,1162,2618,1178,2670,1170,2758,1210,2682,6"  href="#">
-                <area shape="poly" name="broccoli"  coords="2990,1734,2978,1702,3002,1666,3034,1658,3066,1674,3086,1718,3062,1750,3022,1754" href="#">
-                <area shape="poly" name="dip" coords="546,1318,514,1298,510,1350,658,1386,742,1326,730,1246" href="#">
+    <map id="theroom" name="roo">
+                <area shape="poly" name="violin" coords="1666,1722,1638,1698,1622,1646,1606,1606,1610,1566,1598,1546,1582,1542,1566,1510,1554,1478,1546,1438,1570,1406,1518,1310,1490,1286,1470,1302,1494,1326,1470,1346,1446,1330,1462,1286,1502,1274,1526,1286,1566,1346,1594,1394,1626,1414,1650,1478,1686,1526,1702,1570,1718,1602,1734,1634,1738,1674,1706,1710,1710,1718,1726,1706,1694,1722,1730,1702,1686,1726" href="#" onclick="doit('violin')">
+
+                <area shape="poly" name="books" coords="2030,1722,2122,1674,2102,1646,2118,1638,2114,1594,2102,1570,2106,1538,2130,1530,2138,1502,2058,1478,1902,1474,1898,1586,1962,1618,1962,1686" href="#" onclick="doit('books')">
+
+                <area shape="poly" name="item3" coords="2370,1830,2370,1806,2346,1734,2318,1646,2306,1602,2474,1578,2638,1530,2730,1790,2486,1838" href="#" onclick="doit('item3')">
+
+                <area shape="poly" name="item4" coords="1394,866,1366,734,1394,674,1442,718,1458,834,1482,862,1466,858,1406,870" href="#" onclick="doit('item4')">
+
+                <area shape="poly" name="item4.5" coords="1590,474,1618,834,1886,854,1870,490"  href="#" onclick="doit('item4.5')">
+
+                <area shape="poly" name="item5" coords="2210,6,2178,1022,2210,1058,2246,1062,2250,1206,2310,1170,2418,1166,2446,1158,2486,1162,2522,1158,2562,1162,2590,1162,2618,1178,2670,1170,2758,1210,2682,6"  href="#" onclick="doit('item5')">
+
+                <area shape="poly" name="ball"  coords="2990,1734,2978,1702,3002,1666,3034,1658,3066,1674,3086,1718,3062,1750,3022,1754" href="#" onclick="doit('ball')">
+
+                <area shape="poly" name="item6" coords="546,1318,514,1298,510,1350,658,1386,742,1326,730,1246" href="#" onclick="doit('item6')">
+
+                <area shape="poly" name="item7" coords="693,2701,627,2629,585,2563,579,2491,600,2446,633,2398,600,2284,645,2236,684,2362,762,2401,795,2443,810,2515,810,2608,810,2650,780,2689,750,2716" href="#" onclick="doit('item7')">
+
+                <area shape="poly" name="item8" coords="888,1299,843,1308,807,1281,810,1242,825,1233,825,1218,840,1218,861,1236" href="#" onclick="doit('item8')">
+
+                <area shape="poly" name="item9" coords="3,209,312,269,252,623,0,635" href="#" onclick="doit('item9')">
+
+                 <area shape="poly" name="item10" coords="1711,1122,1708,1014,1645,1005,1645,960,1681,942,1684,930,1690,924,1678,903,1744,894,1741,924,1783,948,1798,996,1732,1023"  href="#" onclick="doit('item10')">
 
             </map> 
+<script type="text/javascript">
+    var status=0;
+    function doit(q)
+        {
+            
+            // 1.check status
+            // 2.if status = 0, then popup(game)
+            if(status==0)
+            {  
+                alert("asteroid game");
+               // ag();
+                status++;
+            }
+            // 3.if status = 1 && id = books then popup(cowsandbulls)
+            else if(status==1 && q=='books')
+            {
+                alert("cows and bulls");
+                status++;
+            }
+            //   else popup(message) then popup(game)
+            else if(status==1 && q!='books')
+            {
+                alert("Ha ha! Wrong item. Now suffer.");
+                alert("asteroid game");
+                
+            }
+            // 4.if status = 2 && id!=violin then popup(message) then popup(game)
+            else if(status==2 && q!='violin')
+            {    
+                alert("Ha ha! Wrong item. Now suffer.");
+                alert("asteroid game");
+                
+
+            }
+            //   else popup(violin)
+            else if(status==2 && q=='violin')
+            {
+                alert("Violin. Connect 4");
+                status++;
+            }
+
+            // 5.if status > 2 popup(message) then popup(game) 
+            else if(status>2)
+            {
+                alert("Aww! You're stuck with me baby.");
+                alert("asteroid game");
+            }
+            
+        }
+        function ag()
+        {
+            alert("inside ag");
+            var room = document.getElementById('room');
+            var lol = document.getElementById('game');
+            room.style.visibility="hidden";
+            lol.style.visibility="visible";
+                        var camera, scene, renderer, player, coin;
+            var mouse = new THREE.Vector2();
+            var enemies = [];
+            var enemySpeed = 3;
+            var scoreDiv = document.getElementById( "score" );
+            var bestScoreDiv = document.getElementById( "bestScore" );
+            var sphereRadius = 10;
+            var flag;
+            var enemyRange = new THREE.Vector3(550,700,700);
+            var coinRange = 500;
+            var fireSpeed = 4;
+            var bullets = [];
+            var mouseclick = false;
+            var container = document.getElementById( "container" );
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize( container.clientWidth, container.clientHeight );
+            document.body.appendChild( container );
+            container.appendChild( renderer.domElement );
+            camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 1, 1000 );
+            camera.position.z = 400;
+            scene = new THREE.Scene();
+            var geometry = new THREE.SphereGeometry( sphereRadius );
+            var geometry2 = new THREE.SphereGeometry(sphereRadius/2);
+                //var texture = THREE.ImageUtils.loadTexture( 'crate.gif' );
+                //texture.anisotropy = renderer.getMaxAnisotropy();
+            var material = new THREE.MeshBasicMaterial( { color: 0x00ff11 } );
+                // enemies
+            var n = 30;
+            for ( var i = 0; i < n; i++ ) {
+                    var mesh = new THREE.Mesh( geometry, material );
+                    mesh.position.set( enemyRange.x/2 - enemyRange.x*Math.random(),
+                                       enemyRange.y/2 - enemyRange.y*Math.random(),
+                                       enemyRange.z/2 - enemyRange.z*Math.random());
+                    scene.add( mesh );
+
+                    enemies.push( mesh );
+                }
+                
+            coin = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( {color: 0xFFFF00} ) );
+            var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
+            coin.position.set( coinRange/2 - coinRange * Math.random(),
+                                  coinRange/2 - coinRange * Math.random(),
+                                  0.0);
+            scene.add( coin );
+            player = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial() );
+            scene.add( player );
+            container.addEventListener('mousemove',onMouseMove,false);
+            animate();
+            function onMouseMove( event ) {
+
+                mouse.x = event.clientX - container.offsetLeft;
+                mouse.y = - ( event.clientY - container.offsetTop );
+                player.position.set(  -(enemyRange.x/2-mouse.x),mouse.y+enemyRange.y/4, 0.0 );
+            }
+
+            function onClickof()
+            {
+                
+                var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
+                fire.scale.set(2,2,2);
+                fire.position.z = 0.0;
+                fire.position.y = 0.25 + player.position.y;
+                fire.position.x = 0.25 + player.position.x;
+                scene.add(fire);
+                bullets.push(fire);
+
+
+            }
+            function animate() {
+
+                requestAnimationFrame( animate );
+                container.addEventListener( 'click', onClickof, false );    
+
+                
+                for ( var i = 0; i < enemies.length; i++ ){
+                    if ( enemies[i].position.z > enemyRange.z/2 ) 
+                    { 
+                        enemies[i].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); 
+                        enemies[i].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
+                        enemies[i].position.z = -enemyRange.z/2;
+                    } 
+                    else 
+                    {
+                        if ( enemies[i].position.distanceTo( player.position ) < 2 * sphereRadius) 
+                        { 
+                            scoreDiv.innerHTML = "0"; 
+                        }
+                        enemies[i].position.z += enemySpeed; 
+                    }
+                }
+                for(var j = 0;j<bullets.length;j++)
+                {
+                    if (bullets[j].position.z > enemyRange.z) 
+                    { 
+                        bullets.splice(j,1);
+                    } 
+                    else 
+                    {
+                        for(var k=0;k<enemies.length;k++)
+                            {
+                            if ( bullets[j].position.distanceTo( enemies[k].position ) < 3*sphereRadius/2) 
+                            { 
+                                var score = Number(scoreDiv.innerHTML) + 7; 
+                                scoreDiv.innerHTML = score.toString();
+                                enemies[k].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); 
+                                enemies[k].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
+                                bullets[j].position.z = enemyRange.z;
+                                bullets.splice(j,1); j--;
+                                                        
+                            }
+                        }
+                        bullets[j].position.z -= 4; 
+                    }
+                }
+            
+                if ( player.position.distanceTo( coin.position ) < 2 * sphereRadius ) {
+                    coin.position.x = coinRange/2 - coinRange * Math.random();
+                    coin.position.y = coinRange/2 - coinRange * Math.random();
+
+                    score = Number(scoreDiv.innerHTML) + 1; 
+                    scoreDiv.innerHTML = score.toString();
+
+                    var best = bestScoreDiv.innerHTML.split(' ');
+                    if ( score > Number( best[1] ) ) {
+                        bestScoreDiv.innerHTML = best[0] + " " + score.toString();
+                    }
+                }
+    
+                renderer.render( scene, camera );
+
+            }
+
+
+        }
+</script>
+
 </body>
 </html>
