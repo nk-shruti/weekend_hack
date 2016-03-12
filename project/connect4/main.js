@@ -47,7 +47,7 @@ function createBoard(n)
 createBoard(4);
 window.onkeypress = function(event)
 {	
-	if(turn==1)
+	//if(turn==1)
 	{
 
 		e=event.keyCode;
@@ -93,11 +93,12 @@ function user(num)
 		turn = 0;
 		var p = 10*row+num;
 		document.getElementById(p).style.backgroundColor="red";
-		a[p/10][num] = me;
+		a[row][num] = me;
 		if(check(row,num,me,n,x)==true) 
 			alert("YAY! You won.");
 		else {alert("Keep playing");
-			computers(n,x);}
+			computers(n,x);
+		}
 
 	}
 }
@@ -146,15 +147,16 @@ function checkcol(row,col,player,n,x)
 	if(flag==1) return true;
 	else return false;
 }
+
 function checkrow(row,col,player,n,x)
 {
 	var flag = 1;
 	for(var i = col-(x-1);i<=col;i++)
 	{
 		if(i>=0)
-			if(a[i][j]==a[i][j+1] && a[i][j]==player && j<n)
-				if(a[i][j+1]==a[i][j+2] && j<n)
-					if(a[i][j+2]==a[i][j+3] && j<n)
+			if(a[row][i]==a[row][i+1] && a[row][i]==player && i<n)
+				if(a[row][i+1]==a[row][i+2] && i<n)
+					if(a[row][i+2]==a[row][i+3] && i<n)
 						return true;
 	}
 	return false;
@@ -189,12 +191,13 @@ function checkdiag(row,col,player,n,x)
 }*/
 function computers(n,x)
 {
-	alert("into first stupid function");
+	alert("into oooo first stupid function");
 	var p = makemove(n,x)
+	alert("p"+p);
 	if(p==-1) makemove(n,x);
 	else 
 	{
-		turn =1;
+		turn=1;
 		document.getElementById(p).style.backgroundColor="black";
 		a[p/10][p%10] = comp;
 		if(check(p/10,p%10,me,n,x)==true) 
@@ -208,7 +211,179 @@ function computers(n,x)
 function makemove(n,x)
 {
 	alert("into this stupid function");
-	return 0;
+	var i,j,k;
+	//CHECK IF THE COMPUTER CAN WIN!!!!!!!!!!!
+	for(i=n-1;i>=0;i--)
+	{
+		for(j=0;j<n;j++)
+		{
+			if(a[i][j]==0)
+			{
+				if(i!=n-1)
+				{
+					if(a[i+1][j]!=0)
+					{
+						if(check(i,j,comp,n,x))
+						{
+							m = push(j,comp,n,x);
+							if(m==i)
+							{
+								alert("1"+m);
+								return m*10+j;
+							}
+						}
+					}
+				}
+				else
+				{
+					if(check(i,j,comp,n,x))
+					{
+							m = push(j,comp,n,x);
+							if(m==i)
+							{
+								alert("2"+m);
+								return m*10+j;
+							}
+					}
+				}
+
+			}
+		}
+	}
+	//CHECK IF USER CAN WIN!!!! IF SO PREVENT IT!
+	for(i=n-1;i>=0;i--)
+	{
+		for(j=0;j<n;j++)
+		{
+			if(a[i][j]==0)
+			{
+				if(i!=n-1)
+				{
+					if(a[i+1][j]!=0)
+					{
+						if(check(i,j,me,n,x))
+						{
+							m = push(j,comp,n,x);
+							if(m==i)
+							{
+								alert("3"+m);
+								return m*10+j;
+							}
+						}
+					}
+				}
+				else
+				{
+					if(check(i,j,me,n,x))
+					{
+							m = push(j,comp,n,x);
+							if(m==i)
+							{
+								alert("4"+m);
+								return m*10+j;
+							}
+					}
+				}
+
+			}
+		}
+	}
+
+	for(k=1;k<x;k++)
+	{
+		for(i=n-1;i>=0;i--)
+		{
+			for(j=0;j<n;j++)
+			{
+				
+					if(a[i][j]==0)
+				{
+					if(i!=n-1)
+					{
+						if(a[i+1][j]!=0)
+						{
+							if(check(i,j,comp,n,x-k))
+							{
+								m = push(j,comp,n,x);
+								if(m==i)
+								{
+									alert("5"+m);
+									return m*10+j;
+								}
+							}
+						}
+					}
+					else
+					{
+						if(check(i,j,comp,n,x-k))
+						{
+								m = push(j,comp,n,x);
+								if(m==i)
+								{
+									alert("6"+m+"."+k);
+									return m*10+j;
+								}
+						}
+					}
+
+				//can I get x-k?
+				}
+			}
+		}
+	}
+
+
+	for(k=2;k<x;k++)
+	{
+		for(i=n-1;i>=0;i--)
+		{
+			for(j=0;j<n;j++)
+			{
+				
+					if(a[i][j]==0)
+				{
+					if(i!=n-1)
+					{
+						if(a[i+1][j]!=0)
+						{
+							if(check(i,j,me,n,x-k))
+							{
+								m = push(j,comp,n,x);
+								if(m==i){
+									alert("7"+m);
+									return m*10+j;
+								}
+							}
+						}
+					}
+					else
+					{
+						if(check(i,j,me,n,x-k))
+						{
+								m = push(j,comp,n,x);
+								if(m==i){
+									alert("8"+m);
+									return m*10+j;
+								}
+						}
+					}
+
+				//can I prevent u from gettin x-k?
+				}
+			}
+		}
+	}
+	while(1)
+	{
+		m = push(Math.random()*j,comp,n,x);
+		if(m!=-1){
+			alert("9"+m);
+			return m*10+j;
+		}
+	}	
+}
+	/*
+
 	for(var i=0;i<n;i++)
 	{
 		for(var j=n-1;j>=0;j++)
@@ -256,4 +431,5 @@ function makemove(n,x)
 	m=push(Math.random()*(n-1),j,comp,n,l);
 	if(m==-1) return m;
 						else return 10*m+j;
-}
+						*/
+
