@@ -1,0 +1,159 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Room</title>
+<script type="text/javascript" src="libs/jquery.min.js"></script>
+<script type="text/javascript" src="libs/jquery.imagemapster.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+       var image = $('img');
+
+       image.mapster(
+       {
+            fillOpacity: 0.4,
+            fillColor: "d42e16",
+            strokeColor: "3320FF",
+            strokeOpacity: 0.8,
+            strokeWidth: 4,
+            stroke: true,
+            isSelectable: true,
+            singleSelect: true,
+            mapKey: 'name',
+            listKey: 'name',
+            onClick: function (e) {
+  
+            },
+            showToolTip: false,
+            toolTipClose: ["tooltip-click", "area-click"],
+            areas: [
+                {
+                    key: "redpepper",
+                    fillColor: "ffffff"
+                },
+                {
+                    key: "yellowpepper",
+                    fillColor: "000000"
+                },
+                {
+                    key: "carrots",
+                    fillColor: "000000"
+                },
+                {
+                   key: "dip",
+                  //toolTip: defaultDipTooltip
+                },
+                {
+                   key: "asparagus",
+                   strokeColor: "FFFFFF"
+                }
+                ]
+        });
+      });
+</script>
+<style>
+#wholething
+{
+    position: absolute;
+    top:0%;
+    left: 0%;
+    height:100%;
+    width:100%;
+    background-color: black;
+}
+#topbar
+{
+    position: absolute;
+    top:0%;
+    left: 0%;
+    height:10%;
+    width:100%;
+    background-color: black;
+
+}
+#bottombar
+{
+    position: absolute;
+    bottom:0%;
+    left: 0%;
+    height:10%;
+    width:100%;
+    background-color: black;
+}
+#room
+{
+    position: absolute;
+    top:20%;
+    left: 20%;
+    height:80%;
+    width: 65%;
+    background-image: black;
+}
+#image
+{
+    position: absolute;
+    top:20%;
+    left: 20%;
+     height:80%;
+    width: 65%%;
+}
+#game
+{
+
+}
+#bnc
+{
+
+}
+#violin
+{
+
+}
+
+</style>
+</head>
+
+<body>
+<div id="wholething">
+    <div id="topbar">
+
+
+    </div> <!-- topbar -->
+    <div id="room">
+        <img src="images/room2.jpg" id="image" usemap="#veg" />
+    </div>
+            
+        <div id="game">
+        
+        </div> <!-- game -->
+        <div id="bnc">
+
+        </div> <!-- bnc -->
+        <div id="violin">
+
+        </div> <!-- violin -->
+
+    
+    <div id="bottombar">
+
+
+    </div> <!-- bottombar -->
+
+</div> <!-- wholething -->
+<!-- MAPPING WITH IMAGEMASTER -->
+<map id="veg_map" name="veg">
+                <area shape="poly" name="redpepper" coords="1666,1722,1638,1698,1622,1646,1606,1606,1610,1566,1598,1546,1582,1542,1566,1510,1554,1478,1546,1438,1570,1406,1518,1310,1490,1286,1470,1302,1494,1326,1470,1346,1446,1330,1462,1286,1502,1274,1526,1286,1566,1346,1594,1394,1626,1414,1650,1478,1686,1526,1702,1570,1718,1602,1734,1634,1738,1674,1706,1710,1710,1718,1726,1706,1694,1722,1730,1702,1686,1726" href="#">
+                <area shape="poly" name="celery" coords="2030,1722,2122,1674,2102,1646,2118,1638,2114,1594,2102,1570,2106,1538,2130,1530,2138,1502,2058,1478,1902,1474,1898,1586,1962,1618,1962,1686" href="#">
+                <area shape="poly" name="carrots" coords="2030,1722,2122,1674,2102,1646,2118,1638,2114,1594,2102,1570,2106,1538,2130,1530,2138,1502,2058,1478,1902,1474,1898,1586,1962,1618,1962,1686" href="#">
+                <area shape="poly" name="asparagus" coords="2370,1830,2370,1806,2346,1734,2318,1646,2306,1602,2474,1578,2638,1530,2730,1790,2486,1838" href="#">
+                <area shape="poly" name="squash" coords="1394,866,1366,734,1394,674,1442,718,1458,834,1482,862,1466,858,1406,870" href="#">
+                <area shape="poly" name="yellowpepper" coords="1590,474,1618,834,1886,854,1870,490"  href="#">
+                <area shape="poly" name="broccoli" coords="2210,6,2178,1022,2210,1058,2246,1062,2250,1206,2310,1170,2418,1166,2446,1158,2486,1162,2522,1158,2562,1162,2590,1162,2618,1178,2670,1170,2758,1210,2682,6"  href="#">
+                <area shape="poly" name="broccoli"  coords="2990,1734,2978,1702,3002,1666,3034,1658,3066,1674,3086,1718,3062,1750,3022,1754" href="#">
+                <area shape="poly" name="dip" coords="546,1318,514,1298,510,1350,658,1386,742,1326,730,1246" href="#">
+
+            </map> 
+</body>
+</html>

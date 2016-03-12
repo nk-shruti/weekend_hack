@@ -1,0 +1,136 @@
+<html>
+<head>
+<style>
+body
+{
+	background-image: url('https://i.ytimg.com/vi/hI4VSP0hX6Y/maxresdefault.jpg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 50% 50%;
+	background-color: black;
+}
+@-webkit-keyframes typing
+{
+	from {width:0}
+	to {width:16.3em}
+}
+@-moz-keyframes typing
+{
+	from {width:0}
+	to {width:16.3em}
+}
+@-webkit-keyfranes blink
+{
+	from, to {border-color:transparent}
+	50% {border-color: black}
+}
+@-moz-keyframes blink
+{
+		from, to {border-color:transparent}
+	50% {border-color: black}
+}
+body {font-family: Consolas, monospace;}
+.one
+{
+	font-size: 200%;
+	color: white;
+	width:16.3em;
+	white-space: nowrap;
+	overflow: hidden;
+	border-right: .1em solid black;
+	-webkit-animation : typing 17s steps(34,end), blink 1s step-end infinite;
+	-moz-animation : typing 17s steps(34,end), blink 1s step-end infinite ;
+	position: absolute;
+	top:75%;
+	left:25%;
+  
+}
+#two
+{	font-family: Consolas, monospace;
+	position: absolute;
+	top:85%;
+	left:45%;
+ background-color: #004A7F;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  
+  font-size: 20px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+
+}
+@-webkit-keyframes glowing {
+  0% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -webkit-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -webkit-box-shadow: 0 0 3px #B20000; }
+}
+
+@-moz-keyframes glowing {
+  0% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; -moz-box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; -moz-box-shadow: 0 0 3px #B20000; }
+}
+
+@-o-keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+@keyframes glowing {
+  0% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+  50% { background-color: #FF0000; box-shadow: 0 0 40px #FF0000; }
+  100% { background-color: #B20000; box-shadow: 0 0 3px #B20000; }
+}
+
+.button {
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+</style>
+</head>
+<body>
+<h1 class="one" id="one">
+Didja miss me?????????
+
+</h1>
+<button id="two" class="button" onclick="change();"> CONTINUE </button>
+
+
+<script type="text/javascript">
+var i=0;
+var a = [];
+a[0] = "I am back."
+a[1] = "Hi, Sherlock. How are you?"
+a[2] = "Never mind, I don't care."
+a[3] = "Find the code."
+a[4] = "I've left clues in 221B."
+a[5] = "Save Watson Junior."
+a[6] = ""
+function change()
+{
+	element = document.getElementById('one');
+	element.innerHTML= a[i];
+	 element.classList.remove("one");
+  
+  // -> triggering reflow /* The actual magic */
+  // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+  element.offsetWidth = element.offsetWidth;
+  
+  // -> and re-adding the class
+  element.classList.add("one");
+	i++;
+	if(i==7)
+location.href="room2.html"
+}
+</script>
+
+</body>
+</html>

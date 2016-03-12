@@ -13,7 +13,7 @@
 				margin-top: 12px;
 				font-style: bold;
 				text-align: center;
-				color: MediumSeaGreen;
+				color: Grey;
 			}
 			#container {
 				width: 500px;
@@ -29,7 +29,7 @@
 				margin-top: 12px;
 				font-style: bold;
 				text-align: center;
-				color: MediumSeaGreen;
+				color: Grey;
 			}
 
 
@@ -42,9 +42,9 @@
 		<div id="bestScore">best: 0</div>
 		<script src="libs/three.js"></script>
 
+		
 		<script>
-
-			var camera, scene, renderer, player, gem;
+			var camera, scene, renderer, player, coin;
 			var mouse = new THREE.Vector2();
 			var enemies = [];
 			var enemySpeed = 3;
@@ -52,37 +52,27 @@
 			var bestScoreDiv = document.getElementById( "bestScore" );
 			var sphereRadius = 10;
 			var flag;
-			//var enemyRangeX = 550;
-			//var enemyRangeY = 700;
 			var enemyRange = new THREE.Vector3(550,700,700);
-			var gemRange = 500;
+			var coinRange = 500;
 			var fireSpeed = 4;
 			var bullets = [];
-			//init();
-			
 			var mouseclick = false;
-			//function init() {
-
-				// renderer
-				var container = document.getElementById( "container" );
-				renderer = new THREE.WebGLRenderer();
-				renderer.setSize( container.clientWidth, container.clientHeight );
-				document.body.appendChild( container );
-				container.appendChild( renderer.domElement );
-				// camera
-				camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 1, 1000 );
-				camera.position.z = 400;
-				// scene
-				scene = new THREE.Scene();
-				// mesh properties
-				var geometry = new THREE.SphereGeometry( sphereRadius );
-				var geometry2 = new THREE.SphereGeometry(sphereRadius/2);
+			var container = document.getElementById( "container" );
+			renderer = new THREE.WebGLRenderer();
+			renderer.setSize( container.clientWidth, container.clientHeight );
+			document.body.appendChild( container );
+			container.appendChild( renderer.domElement );
+			camera = new THREE.PerspectiveCamera( 70, container.clientWidth / container.clientHeight, 1, 1000 );
+			camera.position.z = 400;
+			scene = new THREE.Scene();
+			var geometry = new THREE.SphereGeometry( sphereRadius );
+			var geometry2 = new THREE.SphereGeometry(sphereRadius/2);
 				//var texture = THREE.ImageUtils.loadTexture( 'crate.gif' );
 				//texture.anisotropy = renderer.getMaxAnisotropy();
-				var material = new THREE.MeshBasicMaterial( { color: 0x00ff11 } );
+			var material = new THREE.MeshBasicMaterial( { color: 0x00ff11 } );
 				// enemies
-				var nBoxes = 30;
-				for ( var i = 0; i < nBoxes; i++ ) {
+			var n = 30;
+			for ( var i = 0; i < n; i++ ) {
 					var mesh = new THREE.Mesh( geometry, material );
 					mesh.position.set( enemyRange.x/2 - enemyRange.x*Math.random(),
 									   enemyRange.y/2 - enemyRange.y*Math.random(),
@@ -91,27 +81,16 @@
 
 					enemies.push( mesh );
 				}
-				// gem
-				gem = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( {color: 0xFFFF00} ) );
-				var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
-
-				gem.position.set( gemRange/2 - gemRange * Math.random(),
-								  gemRange/2 - gemRange * Math.random(),
+				
+			coin = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial( {color: 0xFFFF00} ) );
+			var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
+			coin.position.set( coinRange/2 - coinRange * Math.random(),
+								  coinRange/2 - coinRange * Math.random(),
 								  0.0);
-				scene.add( gem );
-				// player
-				player = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial() );
-				//var map =  THREE.ImageUtils.loadTexture();
-				// var spriteMaterial = new THREE.SpriteMaterial( { color:0xff0000});
-				// var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
-				// fire.scale.set(2,2,2);
-				// fire.position.z = 1.2;
-				// fire.position.y = 0.25;
-				// fire.position.z = player.position.z;
-				// scene.add(fire);
-				scene.add( player );
-				container.addEventListener('mousemove',onMouseMove,false);
-			//}
+			scene.add( coin );
+			player = new THREE.Mesh( geometry, new THREE.MeshBasicMaterial() );
+			scene.add( player );
+			container.addEventListener('mousemove',onMouseMove,false);
 			animate();
 			function onMouseMove( event ) {
 
@@ -119,22 +98,16 @@
 				mouse.y = - ( ( event.clientY - container.offsetTop ) / container.clientHeight ) * 2 + 1;
 
 				player.position.set( 275 * mouse.x, 275 * mouse.y, 0.0 );
-				//fire.position.set(275 * mouse.x+fire.position.x, 275 * mouse.y+fire.position.y, 0.0)
-
 			}
 
 			function onClickof()
 			{
-				//alert("You have clicked the mouse!");
-				// mouseclick = true;
+				
 				var fire = new THREE.Mesh(geometry2, new THREE.MeshBasicMaterial({ color:0xff0000}));
-
-					//fire.position.set(player.x,player.y,player.z-=10);
 				fire.scale.set(2,2,2);
 				fire.position.z = 0.0;
 				fire.position.y = 0.25 + player.position.y;
 				fire.position.x = 0.25 + player.position.x;
-				//fire.position.z = player.position.z;
 				scene.add(fire);
 				bullets.push(fire);
 
@@ -145,17 +118,21 @@
 				requestAnimationFrame( animate );
 				container.addEventListener( 'click', onClickof, false );	
 
-				// update enemies
+				
 				for ( var i = 0; i < enemies.length; i++ ){
-					if ( enemies[i].position.z > enemyRange.z/2 ) { // if the enemy has moved below the container
-						enemies[i].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); //set new x-coord for variety
+					if ( enemies[i].position.z > enemyRange.z/2 ) 
+					{ 
+						enemies[i].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); 
 						enemies[i].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
 						enemies[i].position.z = -enemyRange.z/2;
-					} else {
-						if ( enemies[i].position.distanceTo( player.position ) < 2 * sphereRadius) { // if there's a player-enemy collision
-							scoreDiv.innerHTML = "0"; //reset score
+					} 
+					else 
+					{
+						if ( enemies[i].position.distanceTo( player.position ) < 2 * sphereRadius) 
+						{ 
+							scoreDiv.innerHTML = "0"; 
 						}
-						enemies[i].position.z += enemySpeed; // translate enemy downwards
+						enemies[i].position.z += enemySpeed; 
 					}
 				}
 				for(var j = 0;j<bullets.length;j++)
@@ -164,28 +141,28 @@
 					{ 
 						bullets.splice(j,1);
 					} 
-					else {
+					else 
+					{
 						for(var k=0;k<enemies.length;k++)
 							{
-							if ( bullets[j].position.distanceTo( enemies[k].position ) < 3*sphereRadius/2) { // if there's a bullet-enemy collision
-
-							var score = Number(scoreDiv.innerHTML) + 7;	
-							scoreDiv.innerHTML = score.toString();
-							enemies[k].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); //set new x-coord for variety
-						enemies[k].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
-						 bullets[j].position.z = enemyRange.z;
-							bullets.splice(j,1); j--;
+							if ( bullets[j].position.distanceTo( enemies[k].position ) < 3*sphereRadius/2) 
+							{ 
+								var score = Number(scoreDiv.innerHTML) + 7;	
+								scoreDiv.innerHTML = score.toString();
+								enemies[k].position.x = enemyRange.x/2 - enemyRange.x * Math.random(); 
+								enemies[k].position.y = enemyRange.y/2- enemyRange.y * Math.random(); 
+						 		bullets[j].position.z = enemyRange.z;
+								bullets.splice(j,1); j--;
 														
+							}
 						}
-						}
-						alert(bullets[j].position.z);
 						bullets[j].position.z -= 4; 
 					}
 				}
-				//player gem collision check
-				if ( player.position.distanceTo( gem.position ) < 2 * sphereRadius ) {
-					gem.position.x = gemRange/2 - gemRange * Math.random();
-					gem.position.y = gemRange/2 - gemRange * Math.random();
+			
+				if ( player.position.distanceTo( coin.position ) < 2 * sphereRadius ) {
+					coin.position.x = coinRange/2 - coinRange * Math.random();
+					coin.position.y = coinRange/2 - coinRange * Math.random();
 
 					score = Number(scoreDiv.innerHTML) + 1; 
 					scoreDiv.innerHTML = score.toString();
