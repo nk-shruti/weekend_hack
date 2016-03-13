@@ -5,7 +5,7 @@ var turn=1;
 //get it from the html page:
 //n = localStorage.getItem("level");
 //x = localStorage.getItem("connect");
-n = 4;
+n = 5;
 x = 4;
 //declare a 2D array:
 var a = new Array(n);
@@ -44,50 +44,29 @@ function createBoard(n)
 		}
 	}
 }
-createBoard(4);
+createBoard(5);
 window.onkeypress = function(event)
 {	
 	if(turn==1)
 	{
 
 		e=event.keyCode;
-		if(e==49)
-		{
-			//alert('1');
-			user(0);
-		}
+		if(e>=49 && e<=49+n)
+			user(e-49);
 		else
-		if(e==50)
-		{
-			//alert('2');
-			user(1);
-			
-		}
-		else
-			if(e==51)
-			{
-				//alert('3');
-				user(2);
-			}
-		else 
-			if(e==52)
-			{
-				//alert('4');
-				user(3)
-			}
-		else alert("Please do enter one of 1 2 3 4. Limited time only is there.");
+			alert("Please do enter one of 1 2 3 4. Limited time only is there.");
 	}
 }
 
 function user(num)
 {
-	alert(num);
+	//alert(num);
 	var row;
 	row = push(num,me,n,x);
-	alert("row"+row);
+	//alert("row"+row);
 	if(row==-1)
 	{
-		alert("Invalid input. Please don't waste time.");
+		//alert("Invalid input. Please don't waste time.");
 
 	}
 	else 
@@ -106,13 +85,13 @@ function user(num)
 }
 function getrow(col,n)
 {
-	alert("into getrow");
+	//alert("into getrow");
 	var i;
 	for(i=n-1;i>=0;i--)
 	{
 		if(a[i][col]==0)
 		{
-			alert(i);
+			//alert(i);
 			return i;
 		}
 		
@@ -140,8 +119,8 @@ function check(row,col,player,n,x)
 		return true;
 	else if(checkrow(row,col,player,n,x))
 		return true;
-	/*else if(checkdiag(row,col,player,n,x))
-		return true;*/
+	else if(checkdiag(row,col,player,n,x))
+	  	return true;
 	else return false;
 }
 function checkcol(row,col,player,n,x)
@@ -164,20 +143,163 @@ function checkcol(row,col,player,n,x)
 	else return false;
 }
 
+// function checkrow(row,col,player,n,x)
+// {
+// 	var flag = 1;
+
+// 	var k;
+// 	for(var i = col-(x-1);i<=col;i++)
+// 	{
+// 		if(i>=0)
+// 		{
+			
+// 			if(i+x-1<n)
+// 			{
+// 				var num=0;
+// 				for(k=1;k<x;k++)
+// 				{
+					
+						
+// 						if(a[row][i]==a[row][i+k] && a[row][i]==player)
+// 						{
+// 							flag=0;
+// 							num++;
+// 						}
+// 				}
+					
+// 				if(num==x)
+// 						return true;
+// 			}
+			
+// 		}
+// 	}
+// 	return false;
+//  }
 function checkrow(row,col,player,n,x)
 {
-	var flag = 1;
-	for(var i = col-(x-1);i<=col;i++)
+	var i,j;
+	i=row;
+	j=col;
+	var left=0;
+	var right=0;
+	if(a[row][col]!=player)
+		return false;
+	while(j>=0 && j>=col-x+1)
 	{
-		if(i>=0)
-			if(a[row][i]==a[row][i+1] && a[row][i]==player && i<n)
-				if(a[row][i+1]==a[row][i+2] && i<n)
-					if(a[row][i+2]==a[row][i+3] && i<n)
-						return true;
+		if(a[row][col]!=a[row][j])
+			break;
+		else 
+			left++;
+		j--;
 	}
-	return false;
-
+	j=col;
+	while(j<n && j<=col+x-1)
+	{
+		if(a[row][col]!=a[row][j])
+			break
+		else right++;
+		j++;
+	}
+	if(left+right>x)
+		return true;
+	else return false;
 }
+function checkdiag(row,col,player,n,x)
+{
+	//main diagonal check
+	var back_c=0;
+	var front_c=0;
+	var i,j;
+	i=row;
+	j=col;
+	if(a[i][j]!=player)
+		return false;
+	while(i>=row-x+1 && j>=col-x+1 && i>=0 && j>=0)
+	{
+		if(a[i][j]!=a[row][col])
+			break;
+		else 
+			back_c++;
+		i--;
+		j--;
+	}
+	i=row;
+	j=col;
+	while(i<n && j<n && i<=row+x-1 && j<=col+x-1)
+	{
+		if(a[i][j]!=a[row][col])
+			break;
+		else
+			front_c++;
+		i++;
+		j++;
+	}
+	if(back_c+front_c>x)
+		return true;
+	//other diagonal check
+	back_c=0;
+	front_c=0;
+	i=row;
+	j=col;
+	while(i<n && j>=0 && i<=row+x-1 && j>=col-x+1)
+	{
+		if(a[i][j]!=a[row][col])
+			break;
+		else
+			back_c++;
+		i++;
+		j--;
+
+	}
+	i=row;
+	j=col;
+	while(i>=0 && j<n && i>=row-x+1 && j<=col+x-1)
+	{
+		if(a[i][j]!=a[row][col])
+			break;
+		else
+			front_c++;
+		i--;
+		j++;
+
+	}
+	if(back_c+front_c>x)
+		return true;
+	return false;
+}
+// function checkdiag(row,col,n,x)
+// {
+// 	if(row<x-1 || col<x-1)
+// 	{
+// 		if()
+// 	}
+// }
+
+// function checkdiag(row,col,player,n,x)
+// {
+// 	var i,j;
+// 	if(row>x-1 && col>x-1 && row<n-x+1 && col<n-x+1)
+// 	{
+// 		for(i=row+(x-1),j=col-(x-1);i>=row;i--,j++)
+// 		{
+// 			if(a[i][j]==a[i-1][j+1] && a[i][j]==player)
+// 				if(a[i-1][j+1] == a[i-2][j+2)
+// 					if(a[i-2][j+2]==a[i-3][j+3])
+// 						return true;
+
+
+// 		}
+// 		for(i=row-(x-1),j=col-(x-1);i<=row;i++,j++)
+// 		{
+// 			if(a[i][j]==a[i+1][j+1] && a[i][j]==player)
+// 				if(a[i+1][j+1] == a[i+2][j+2])
+// 					if(a[i+2][j+2]==a[i+3][j+3])
+// 						return true;
+// 		}
+// 	}
+
+// 	return false;
+// }
 /*
 function checkdiag(row,col,player,n,x)
 {
@@ -207,16 +329,19 @@ function checkdiag(row,col,player,n,x)
 }*/
 function computers(n,x)
 {
-	alert("into oooo first stupid function");
-	var p ;
+	//alert("into oooo first stupid function");
+	var p = -1;
 	while(p==-1) 
 		p = makemove(n,x);
 	alert("p="+p);
 	turn=1;
 	document.getElementById(p).style.backgroundColor="black";
 	a[p/10][p%10] = comp;
-	if(check(p/10,p%10,me,n,x)==true) 
-		alert("OH NO! You LOST.");
+	if(check(p/10,p%10,comp,n,x)==true) 
+		{
+			alert("OH NO! You LOST.");
+			turn=0;
+		}
 
 	
 }
@@ -225,7 +350,7 @@ function computers(n,x)
 //computer deciding
 function makemove(n,x)
 {
-	alert("into this stupid function");
+	//alert("into this stupid function");
 	var i,j,k;
 
 	//CHECK IF COMPUTER CAN WIN .
@@ -233,7 +358,7 @@ function makemove(n,x)
 	{
 		i = getrow(j,n);
 		if(i==-1)
-			break;
+			continue;
 		a[i][j] = comp;
 		if(check(i,j,comp,n,x))
 		{
@@ -251,7 +376,7 @@ function makemove(n,x)
 	{
 		i = getrow(j,n);
 		if(i==-1)
-			break;
+			continue;
 		a[i][j] = me;
 		if(check(i,j,me,n,x))
 		{
@@ -271,7 +396,7 @@ function makemove(n,x)
 		{
 			i = getrow(j,n);
 			if(i==-1)
-				break;
+				continue;
 			a[i][j] = comp;
 			if(check(i,j,comp,n,x-k))
 			{
@@ -283,6 +408,7 @@ function makemove(n,x)
 			{
 				a[i][j] = 0;
 			}
+		}
 	}	
 
 	//CHECK IF OPP CAN CONNECT X-K
@@ -292,7 +418,7 @@ function makemove(n,x)
 		{
 			i = getrow(j,n);
 			if(i==-1)
-				break;
+				continue;
 			a[i][j] = me;
 			if(check(i,j,me,n,x-k))
 			{
@@ -306,290 +432,20 @@ function makemove(n,x)
 			}
 		}	
 	}
-	return 123;
+
+
+	
 }
-	// for(j=0;j<n;j++)
-	// {
-	// 	for(i=n-1;i>=0;i--)
-	// 	{
-	// 		if(a[i][j]==0)
-	// 		{
-	// 			if(check(i,j,me,n,x))
-	// 			{
-	// 				push(j,comp,n,x);
-	// 				return 10*i+j;
-	// 			}
-	// 			break;
-	// 		}
-	// 	}
-	// }
-	// for(k=1;k<x;k++)
-	// {
-	// 	for(j=0;j<n;j++)
-	// 	{
-	// 		for(i=n-1;i>=0;i--)
-	// 		{
-	// 			if(a[i][j]==0)
-	// 			{
-	// 				if(check(i,j,comp,n,x-k))
-	// 				{
-	// 					push(j,comp,n,x);
-	// 					return 10*i+j;
-	// 				}
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// }
-	// for(k=1;k<x;k++)
-	// {
-	// 	for(j=0;j<n;j++)
-	// 	{
-	// 		for(i=n-1;i>=0;i--)
-	// 		{
-	// 			if(a[i][j]==0)
-	// 			{
-	// 				if(check(i,j,me,n,x-k))
-	// 				{
-	// 					push(j,comp,n,x);
-	// 					return 10*i+j;
-	// 				}
-	// 				break;
-	// 			}
-	// 		}
-	// 	}
-	// }
-	while(1)
-	{
-		var cr = Math.random()*(n-1);
-		var is = push(cr,comp,n,x);
-		if(is!=-1)
-			return is*10+cr;
-		break;
-	}
-}
+	
+// 	while(1)
+// 	{
+// 		var cr = Math.random()*(n-1);
+// 		var is = push(cr,comp,n,x);
+// 		if(is!=-1)
+// 			return is*10+cr;
+// 		break;
+// 	}
+// }
 
 
-	/*
-	//CHECK IF THE COMPUTER CAN WIN!!!!!!!!!!!
-	for(i=n-1;i>=0;i--)
-	{
-		for(j=0;j<n;j++)
-		{
-			if(a[i][j]==0)
-			{
-				if(i!=n-1)
-				{
-					if(a[i+1][j]!=0)
-					{
-						if(check(i,j,comp,n,x))
-						{
-							m = push(j,comp,n,x);
-							if(m==i)
-							{
-								alert("1"+m);
-								return m*10+j;
-							}
-						}
-					}
-				}
-				else
-				{
-					if(check(i,j,comp,n,x))
-					{
-							m = push(j,comp,n,x);
-							if(m==i)
-							{
-								alert("2"+m);
-								return m*10+j;
-							}
-					}
-				}
-
-			}
-		}
-	}
-	//CHECK IF USER CAN WIN!!!! IF SO PREVENT IT!
-	for(i=n-1;i>=0;i--)
-	{
-		for(j=0;j<n;j++)
-		{
-			if(a[i][j]==0)
-			{
-				if(i!=n-1)
-				{
-					if(a[i+1][j]!=0)
-					{
-						if(check(i,j,me,n,x))
-						{
-							m = push(j,comp,n,x);
-							if(m==i)
-							{
-								alert("3"+m);
-								return m*10+j;
-							}
-						}
-					}
-				}
-				else
-				{
-					if(check(i,j,me,n,x))
-					{
-							m = push(j,comp,n,x);
-							if(m==i)
-							{
-								alert("4"+m);
-								return m*10+j;
-							}
-					}
-				}
-
-			}
-		}
-	}
-
-	for(k=1;k<x;k++)
-	{
-		for(i=n-1;i>=0;i--)
-		{
-			for(j=0;j<n;j++)
-			{
-				
-					if(a[i][j]==0)
-				{
-					if(i!=n-1)
-					{
-						if(a[i+1][j]!=0)
-						{
-							if(check(i,j,comp,n,x-k))
-							{
-								m = push(j,comp,n,x);
-								if(m==i)
-								{
-									alert("5"+m);
-									return m*10+j;
-								}
-							}
-						}
-					}
-					else
-					{
-						if(check(i,j,comp,n,x-k))
-						{
-								m = push(j,comp,n,x);
-								if(m==i)
-								{
-									alert("6"+m+"."+k);
-									return m*10+j;
-								}
-						}
-					}
-
-				//can I get x-k?
-				}
-			}
-		}
-	}
-
-
-	for(k=2;k<x;k++)
-	{
-		for(i=n-1;i>=0;i--)
-		{
-			for(j=0;j<n;j++)
-			{
-				
-					if(a[i][j]==0)
-				{
-					if(i!=n-1)
-					{
-						if(a[i+1][j]!=0)
-						{
-							if(check(i,j,me,n,x-k))
-							{
-								m = push(j,comp,n,x);
-								if(m==i){
-									alert("7"+m);
-									return m*10+j;
-								}
-							}
-						}
-					}
-					else
-					{
-						if(check(i,j,me,n,x-k))
-						{
-								m = push(j,comp,n,x);
-								if(m==i){
-									alert("8"+m);
-									return m*10+j;
-								}
-						}
-					}
-
-				//can I prevent u from gettin x-k?
-				}
-			}
-		}
-	}
-	while(1)
-	{
-		m = push(Math.random()*j,comp,n,x);
-		if(m!=-1)
-		{
-			alert("9"+m);
-			return m*10+j;
-		}
-	}	
-}*/
-	/*
-
-	for(var i=0;i<n;i++)
-	{
-		for(var j=n-1;j>=0;j++)
-		{
-			if(a[i][j]==0)
-			{
-				if(check(i,j,comp,n,x-1))
-					{
-						m = push(j,-1,n,x);
-						if(m==-1) continue;
-						else return 10*m+j;
-					}
-				if(check(i,j,me,n,x-1))
-					{
-						m = push(j,-1,n,x);
-						if(m==-1) continue;
-						else return 10*m+j;
-					}
-				for(var k=x-2;k>=1;k--)
-				{
-					if(check(i,j,comp,n,k))
-					{
-						m = push(j,-1,n,x);
-						if(m==-1) continue;
-						else return 10*m+j;
-					}
-
-				}
-				for(var k = x-2;k>=1;k--)
-				{
-					if(check(i,j,me,n,k))
-					{
-						m = push(j,-1,n,x);
-						if(m==-1) continue;
-						else return 10*m+j;
-					}
-
-				}
-
-			
-			}
-		}
-
-	}
-	m=push(Math.random()*(n-1),j,comp,n,l);
-	if(m==-1) return m;
-						else return 10*m+j;
-						*/
 

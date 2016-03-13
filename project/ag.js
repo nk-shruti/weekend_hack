@@ -21,14 +21,14 @@
             var mouseclick = false;
             var container = document.getElementById( "container" );
             
-                renderer = new THREE.WebGLRenderer();
-                renderer.setSize( container.clientWidth, container.clientHeight );
-                if(status==0)
-                {
+            renderer = new THREE.WebGLRenderer();
+            renderer.setSize( container.clientWidth, container.clientHeight );
+            if(status==0)
+            {
                     document.body.appendChild( container );
                     
                     container.appendChild( renderer.domElement );
-                }   
+            }   
             
             camera = new THREE.PerspectiveCamera(70, container.clientWidth / container.clientHeight, 1, 1000 );
             camera.position.z = 400;
@@ -122,7 +122,9 @@
                                 scoreDiv.innerHTML = score.toString();
                                  if(score>=7)
                                 {
-                                    // alert("You won!");
+                                     alert("You won!");
+
+                                    alert("Your first clue is : This helped you solve the Chinese Mafia case.");
                                     score=0;
                                     scoreDiv.innerHTML = score.toString();
                                     document.getElementById('wholething').appendChild(room);
@@ -150,6 +152,7 @@
                     if(score>=7)
                     {
                         alert("You won!");
+                         alert("Your first clue is : This helped you solve the Chinese Mafia case.");
                         score=0;
                         scoreDiv.innerHTML = score.toString();
                         document.getElementById('wholething').appendChild(room);

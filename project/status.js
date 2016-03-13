@@ -9,8 +9,10 @@
                 alert("asteroid game");
                 ag();
                 status++;
+
             }
             // 3.if status = 1 && id = books then popup(cowsandbulls)
+
             else if(status==1 && q=='books')
             {
                 alert("cows and bulls");
