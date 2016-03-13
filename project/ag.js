@@ -62,12 +62,12 @@
             animate();
             function onMouseMove( event ) {
 
-                // mouse.x = event.clientX - container.offsetLeft;
-                // mouse.y = - ( event.clientY - container.offsetTop );
-                // player.position.set(  -(enemyRange.x/2-mouse.x),mouse.y+enemyRange.y/4, 0.0 );
-                mouse.x = ( ( event.clientX - container.offsetLeft ) / container.clientWidth ) * 2 - 1;
-                mouse.y = - ( ( event.clientY - container.offsetTop ) / container.clientHeight ) * 2 + 1;
-                player.position.set( 275 * mouse.x, 275* mouse.y, 0.0 );
+                mouse.x = event.clientX - container.offsetLeft;
+                mouse.y = - ( event.clientY - container.offsetTop );
+                player.position.set(  -(enemyRange.x/2-mouse.x),mouse.y+enemyRange.y/4, 0.0 );
+                // mouse.x = ( ( event.clientX - container.offsetLeft ) / container.clientWidth ) * 2 - 1;
+                // mouse.y = - ( ( event.clientY - container.offsetTop ) / container.clientHeight ) * 2 + 1;
+                // player.position.set( 275 * mouse.x, 275* mouse.y, 0.0 );
             }
 
             function onClickof()

@@ -267,69 +267,10 @@ function checkdiag(row,col,player,n,x)
 		return true;
 	return false;
 }
-// function checkdiag(row,col,n,x)
-// {
-// 	if(row<x-1 || col<x-1)
-// 	{
-// 		if()
-// 	}
-// }
 
-// function checkdiag(row,col,player,n,x)
-// {
-// 	var i,j;
-// 	if(row>x-1 && col>x-1 && row<n-x+1 && col<n-x+1)
-// 	{
-// 		for(i=row+(x-1),j=col-(x-1);i>=row;i--,j++)
-// 		{
-// 			if(a[i][j]==a[i-1][j+1] && a[i][j]==player)
-// 				if(a[i-1][j+1] == a[i-2][j+2)
-// 					if(a[i-2][j+2]==a[i-3][j+3])
-// 						return true;
-
-
-// 		}
-// 		for(i=row-(x-1),j=col-(x-1);i<=row;i++,j++)
-// 		{
-// 			if(a[i][j]==a[i+1][j+1] && a[i][j]==player)
-// 				if(a[i+1][j+1] == a[i+2][j+2])
-// 					if(a[i+2][j+2]==a[i+3][j+3])
-// 						return true;
-// 		}
-// 	}
-
-// 	return false;
-// }
-/*
-function checkdiag(row,col,player,n,x)
-{
-	//non-main diagonal:
-	var i,j;
-	if(row<x-1)
-		return false;
-	if(col<x-1)
-		return false;
-	for(i = row+x-1,j=col-x+1;i>=row;i--,j++)
-	{
-		if(a[i][j]==a[i-1][j+1] && a[i][j]==player)
-			if(a[i-1][j+1]==a[i-2][j+2])
-				if(a[i-2][j+2]==a[i-3][j+3])
-					return true;
-	}
-	//main diagonal
-	for(i = row-x+1,j=col-x+1;i<=row;i++,j++)
-	{
-		if(a[i][j]==a[i+1][j+1] && a[i][j]==player)
-			if(a[i+1][j+1]==a[i+2][j+2])
-				if(a[i+2][j+2]==a[i+3][j+3])
-					return true;
-
-	}
-	return false;
-}*/
 function computers(n,x)
 {
-	//alert("into oooo first stupid function");
+	
 	var p = -1;
 	while(p==-1) 
 		p = makemove(n,x);
@@ -350,7 +291,7 @@ function computers(n,x)
 //computer deciding
 function makemove(n,x)
 {
-	//alert("into this stupid function");
+	
 	var i,j,k;
 
 	//CHECK IF COMPUTER CAN WIN .
@@ -412,7 +353,7 @@ function makemove(n,x)
 	}	
 
 	//CHECK IF OPP CAN CONNECT X-K
-	for(k=1;k<x-1;k++)
+	for(k=1;k<x-3;k++)
 	{
 		for(j=0;j<n;j++)
 		{
@@ -433,19 +374,21 @@ function makemove(n,x)
 		}	
 	}
 
+	while(1)
+	{
+		
+		var cr = Math.floor(Math.random()*(n-1));
+		console.log(cr);
+		var is = push(cr,comp,n,x);
+		if(is!=-1)
+			return is*10+cr;
+		break;
+	}
+}
 
 	
-}
+
 	
-// 	while(1)
-// 	{
-// 		var cr = Math.random()*(n-1);
-// 		var is = push(cr,comp,n,x);
-// 		if(is!=-1)
-// 			return is*10+cr;
-// 		break;
-// 	}
-// }
 
 
 
