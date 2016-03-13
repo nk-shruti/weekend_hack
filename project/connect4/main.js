@@ -47,7 +47,7 @@ function createBoard(n)
 createBoard(4);
 window.onkeypress = function(event)
 {	
-	//if(turn==1)
+	if(turn==1)
 	{
 
 		e=event.keyCode;
@@ -82,7 +82,9 @@ window.onkeypress = function(event)
 function user(num)
 {
 	alert(num);
-	var row = push(num,me,n,x);
+	var row;
+	row = push(num,me,n,x);
+	alert("row"+row);
 	if(row==-1)
 	{
 		alert("Invalid input. Please don't waste time.");
@@ -102,20 +104,34 @@ function user(num)
 
 	}
 }
+function getrow(col,n)
+{
+	alert("into getrow");
+	var i;
+	for(i=n-1;i>=0;i--)
+	{
+		if(a[i][col]==0)
+		{
+			alert(i);
+			return i;
+		}
+		
+	}
+	return -1;
+
+}
 //on clicking the column, the coin falls into the first empty spot from the bottom:
 function push(col,player,n,x)
 {
 	var c = col;
 	var i;
-	for(i=n-1;i>=0;i--)
+	i = getrow(col,n);
+	if(i==-1) return i;
+	else 
 	{
-		if(a[i][c]==0)
-		{
-			a[i][c] = player;
-			return i;
-		}
+		a[i][col] = player;
+		return i;
 	}
-	return -1;
 }
 
 function check(row,col,player,n,x)
@@ -192,18 +208,17 @@ function checkdiag(row,col,player,n,x)
 function computers(n,x)
 {
 	alert("into oooo first stupid function");
-	var p = makemove(n,x)
-	alert("p"+p);
-	if(p==-1) makemove(n,x);
-	else 
-	{
-		turn=1;
-		document.getElementById(p).style.backgroundColor="black";
-		a[p/10][p%10] = comp;
-		if(check(p/10,p%10,me,n,x)==true) 
-			alert("OH NO! You LOST.");
+	var p ;
+	while(p==-1) 
+		p = makemove(n,x);
+	alert("p="+p);
+	turn=1;
+	document.getElementById(p).style.backgroundColor="black";
+	a[p/10][p%10] = comp;
+	if(check(p/10,p%10,me,n,x)==true) 
+		alert("OH NO! You LOST.");
 
-	}
+	
 }
 	var m;
 
@@ -212,6 +227,150 @@ function makemove(n,x)
 {
 	alert("into this stupid function");
 	var i,j,k;
+
+	//CHECK IF COMPUTER CAN WIN .
+	for(j=0;j<n;j++)
+	{
+		i = getrow(j,n);
+		if(i==-1)
+			break;
+		a[i][j] = comp;
+		if(check(i,j,comp,n,x))
+		{
+			a[i][j]=0;
+			push(j,comp,n,x);
+			return 10*i+j;
+		}
+		else
+		{
+			a[i][j] = 0;
+		}
+	}
+	//CHECK IF OPPONENT CAN WIN .
+	for(j=0;j<n;j++)
+	{
+		i = getrow(j,n);
+		if(i==-1)
+			break;
+		a[i][j] = me;
+		if(check(i,j,me,n,x))
+		{
+			a[i][j]=0;
+			push(j,comp,n,x);
+			return 10*i+j;
+		}
+		else
+		{
+			a[i][j] = 0;
+		}
+	}	
+	//CHECK IF COMP CAN CONNECT X-K
+	for(k=1;k<x-1;k++)
+	{
+		for(j=0;j<n;j++)
+		{
+			i = getrow(j,n);
+			if(i==-1)
+				break;
+			a[i][j] = comp;
+			if(check(i,j,comp,n,x-k))
+			{
+				a[i][j]=0;
+				push(j,comp,n,x);
+				return 10*i+j;
+			}
+			else
+			{
+				a[i][j] = 0;
+			}
+	}	
+
+	//CHECK IF OPP CAN CONNECT X-K
+	for(k=1;k<x-1;k++)
+	{
+		for(j=0;j<n;j++)
+		{
+			i = getrow(j,n);
+			if(i==-1)
+				break;
+			a[i][j] = me;
+			if(check(i,j,me,n,x-k))
+			{
+				a[i][j]=0;
+				push(j,comp,n,x);
+				return 10*i+j;
+			}
+			else
+			{
+				a[i][j] = 0;
+			}
+		}	
+	}
+	return 123;
+}
+	// for(j=0;j<n;j++)
+	// {
+	// 	for(i=n-1;i>=0;i--)
+	// 	{
+	// 		if(a[i][j]==0)
+	// 		{
+	// 			if(check(i,j,me,n,x))
+	// 			{
+	// 				push(j,comp,n,x);
+	// 				return 10*i+j;
+	// 			}
+	// 			break;
+	// 		}
+	// 	}
+	// }
+	// for(k=1;k<x;k++)
+	// {
+	// 	for(j=0;j<n;j++)
+	// 	{
+	// 		for(i=n-1;i>=0;i--)
+	// 		{
+	// 			if(a[i][j]==0)
+	// 			{
+	// 				if(check(i,j,comp,n,x-k))
+	// 				{
+	// 					push(j,comp,n,x);
+	// 					return 10*i+j;
+	// 				}
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// for(k=1;k<x;k++)
+	// {
+	// 	for(j=0;j<n;j++)
+	// 	{
+	// 		for(i=n-1;i>=0;i--)
+	// 		{
+	// 			if(a[i][j]==0)
+	// 			{
+	// 				if(check(i,j,me,n,x-k))
+	// 				{
+	// 					push(j,comp,n,x);
+	// 					return 10*i+j;
+	// 				}
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// }
+	while(1)
+	{
+		var cr = Math.random()*(n-1);
+		var is = push(cr,comp,n,x);
+		if(is!=-1)
+			return is*10+cr;
+		break;
+	}
+}
+
+
+	/*
 	//CHECK IF THE COMPUTER CAN WIN!!!!!!!!!!!
 	for(i=n-1;i>=0;i--)
 	{
@@ -376,12 +535,13 @@ function makemove(n,x)
 	while(1)
 	{
 		m = push(Math.random()*j,comp,n,x);
-		if(m!=-1){
+		if(m!=-1)
+		{
 			alert("9"+m);
 			return m*10+j;
 		}
 	}	
-}
+}*/
 	/*
 
 	for(var i=0;i<n;i++)
